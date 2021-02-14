@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import data from './data.js';
+import data from './data';
 
 const app = express();
 
@@ -11,5 +11,6 @@ app.get('/api/products', (req, res) => {
 });
 
 app.listen(5000, () => {
+  // eslint-disable-next-line no-console
   console.log('serve at http://localhost:5000');
 });
