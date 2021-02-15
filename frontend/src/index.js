@@ -7,6 +7,7 @@ import { parseRequestUrl } from './utils';
 const routes = {
   '/': HomeScreen,
   '/product/:id': ProductScreen,
+  '/cart': CartScreen,
   '/cart/:id': CartScreen,
 };
 

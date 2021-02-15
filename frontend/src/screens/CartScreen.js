@@ -20,10 +20,12 @@ const addToCart = (item, forceUpdate) => {
 };
 
 const CartScreen = {
-  after_render: () => {},
+  after_render: async () => {},
   render: async () => {
     const request = parseRequestUrl();
-    if (request.id) {
+    const validCartAdd = localStorage.getItem('adding-item-to-cart') === 'true';
+    if (request.id && validCartAdd) {
+      localStorage.removeItem('adding-item-to-cart');
       const product = await getProduct(request.id);
       addToCart({
         product: product._id,
@@ -34,8 +36,60 @@ const CartScreen = {
         qty: 1,
       });
     }
+    const cartItems = getCartItems();
+
     return `
-    <div>${getCartItems().length}</div>
+    <div class="content cart">
+      <div class="cart-list">
+        <ul class="cart-list-container">
+          <li>
+            <h3>Shopping Cart</h3>
+            <div>Price</div>
+          </li>
+          ${
+            !cartItems.length
+              ? '<div>Cart is empty. <a href="/#/>Go Shopping</a></div>'
+              : cartItems
+                  .map(
+                    (cartItem) => `
+              <li>
+                <div class="cart-image">
+                  <img src="${cartItem.image}" src="${cartItem.name}"/>
+                </div>
+                <div class="cart-name">
+                  <div>
+                    <a href="/#/product/${cartItem.product}">${cartItem.name}</a>
+                  </div>
+                  <div>
+                    Qty: <select class="qty-select" id="${cartItem.product}">
+                      <option value="1">1</option>
+                    </select>
+                    <button type="button" class="delete-button" id="${cartItem.product}">Delete</button>
+                  </div>
+                </div>
+                <div class="cart-price">
+                  $${cartItem.price}
+                </div>
+              </li>
+              `
+                  )
+                  .join('\n')
+          }
+        </ul>
+      </div>
+      <div class="cart-action">
+          <h3>
+            Subtotal (${cartItems.reduce((acc, val) => acc + val.qty, 0)} items)
+            :
+            $${cartItems.reduce((acc, val) => acc + val.qty * val.price, 0)}
+          </h3>
+          <button id="checkout-button" class="primary fw ${
+            !cartItems.length ? 'disabled' : ''
+          }">
+            Proceed to checkout
+          </button>
+      </div>
+    </div>
     `;
   },
 };

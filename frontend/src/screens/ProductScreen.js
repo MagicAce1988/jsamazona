@@ -10,6 +10,7 @@ const ProductScreen = {
     const addButton = document.getElementById('add-button');
     addButton.addEventListener('click', () => {
       if (!addButton.classList.contains('disabled')) {
+        localStorage.setItem('adding-item-to-cart', 'true');
         document.location.hash = `/cart/${request.id}`;
       }
     });
