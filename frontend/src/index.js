@@ -1,7 +1,7 @@
-import Error404Screen from './screens/Error404Screen.js';
-import HomeScreen from './screens/HomeScreen.js';
-import ProductScreen from './screens/ProductScreen.js';
-import { parseRequestUrl } from './utils.js';
+import Error404Screen from './screens/Error404Screen';
+import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
+import { parseRequestUrl } from './utils';
 
 const routes = {
   '/': HomeScreen,
@@ -17,6 +17,7 @@ const router = async () => {
   const screen = routes[parseUrl] ? routes[parseUrl] : Error404Screen;
   const main = document.getElementById('main-container');
   main.innerHTML = await screen.render();
+  if (screen.after_render) await screen.after_render();
 };
 
 window.addEventListener('load', router);

@@ -10,6 +10,8 @@
   --orange: #f08040;
   --gold: #ffc000;
   --golder: #f0c040;
+  --green: #40c040;
+  --red: #c04040;
 }
 
 * {
@@ -53,6 +55,14 @@ button.primary {
 
 .fw {
   width: 100%;
+}
+
+.success {
+  color: var(--green);
+}
+
+.error {
+  color: var(--red);
 }
 
 .grid-container {
