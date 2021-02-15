@@ -53,6 +53,12 @@ button.primary {
   background-color: var(--golder);
 }
 
+button.disabled {
+  cursor: default;
+  background-color: var(--lightGray);
+  outline: none;
+}
+
 .fw {
   width: 100%;
 }
