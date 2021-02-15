@@ -3,8 +3,10 @@
   --blackest: #000000;
   --lightGray: #e0e0e0;
   --darkGray: #808080;
+  --darkerGray: #444444;
   --darkBlue: #203040;
   --orange: #f08040;
+  --gold: #ffc000;
 }
 
 * {
@@ -111,4 +113,16 @@ footer {
 
 .product-price {
   font-size: 2rem;
+}
+
+/* Rating */
+
+.rating {
+  color: var(--gold);
+  font-size: 1.8rem;
+}
+
+.rating span:last-child {
+  color: var(--darkerGray);
+  font-size: 1.4rem;
 }

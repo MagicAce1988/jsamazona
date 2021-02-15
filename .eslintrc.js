@@ -9,5 +9,7 @@ module.exports = {
     sourceType: 'module',
     ecmaVersion: 11,
   },
-  rules: {},
+  rules: {
+    'no-nested-ternary': 0,
+  },
 };
