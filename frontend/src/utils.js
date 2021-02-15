@@ -7,3 +7,10 @@ export const parseRequestUrl = () => {
     action,
   };
 };
+
+export const reRender = async (component) => {
+  document.getElementById(
+    'main-container'
+  ).innerHTML = await component.render();
+  if (component.after_render) await component.after_render();
+};
