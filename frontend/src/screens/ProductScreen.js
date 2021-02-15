@@ -2,18 +2,26 @@ import { getProduct } from '../api';
 import { parseRequestUrl } from '../utils';
 
 import Rating from '../components/Rating';
+import { getCartItems } from '../localStorage';
 
 const ProductScreen = {
   after_render: async () => {
     const request = parseRequestUrl();
     const addButton = document.getElementById('add-button');
     addButton.addEventListener('click', () => {
-      document.location.hash = `/cart/${request.id}`;
+      if (!addButton.classList.contains('disabled')) {
+        document.location.hash = `/cart/${request.id}`;
+      }
     });
   },
   render: async () => {
     const request = parseRequestUrl();
     const product = await getProduct(request.id);
+    const cartItems = getCartItems();
+    const currentProductInCart = cartItems.find(
+      (item) => item.product === request.id
+    );
+    const cartQuantityOfCurrentProduct = currentProductInCart?.qty || 0;
     if (product.error) {
       return `<div>${product.error}</div>`;
     }
@@ -63,13 +71,17 @@ const ProductScreen = {
                   <li>
                     Status: 
                     ${
-                      countInStock > 0
+                      countInStock > cartQuantityOfCurrentProduct
                         ? `<span class="success">In Stock</span>`
                         : `<span class="error">Unavailable</span>`
                     }
                   </li>
                   <li>
-                    <button id="add-button" class="primary fw">Add to Cart</button>
+                    <button id="add-button" class="primary fw ${
+                      countInStock > cartQuantityOfCurrentProduct
+                        ? ''
+                        : 'disabled'
+                    }">Add to Cart</button>
                   </li>
                 </ul>
           </div>
