@@ -11,7 +11,7 @@ const Rating = {
               value >= number
                 ? 'fa fa-star'
                 : value >= number - 0.5
-                ? 'fa fa-star-half-0'
+                ? 'fa fa-star-half-o'
                 : 'fa fa-star-o'
             }"></i>
         </span>
