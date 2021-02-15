@@ -9,7 +9,6 @@ const HomeScreen = {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response);
     if (!response || response.statusText !== 'OK') {
       return `<div>Error in getting data</div>`;
     }
