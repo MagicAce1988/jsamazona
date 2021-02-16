@@ -6,6 +6,7 @@ import body_parser from 'body-parser';
 import config from './config';
 import data from './data';
 import user_router from './routers/user_router';
+import { error_messages_map } from './constants';
 
 mongoose
   .connect(config.MONGODB_URL, {
@@ -42,7 +43,19 @@ app.get('/api/products/:id', (req, res) => {
 
 app.use((err, req, res, next) => {
   const status = err.name && err.name === 'ValidationError' ? 400 : 500;
-  res.status(status).send({ message: err.message });
+  let error_message = err.message;
+  Object.keys(error_messages_map).forEach((error) => {
+    if (error_message.includes(error)) {
+      error_message = error_messages_map[error];
+    }
+  });
+  if (
+    error_message.includes('Path `password`') &&
+    error_message.includes('is shorter than the minimum allowed length')
+  ) {
+    error_message = 'Password must be at least 6 characters long';
+  }
+  res.status(status).send({ message: error_message });
 });
 
 app.listen(5000, () => {
