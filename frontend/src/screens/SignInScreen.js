@@ -2,18 +2,21 @@
 
 import { signIn } from '../api';
 import { getUserInfo, setUserInfo } from '../localStorage';
+import { setLoading, showMessage } from '../utils';
 
 const SignInScreen = {
   after_render: () => {
     const signInForm = document.getElementById('signin-form');
     signInForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      setLoading(true);
       const data = await signIn({
         email: document.getElementById('email').value,
         password: document.getElementById('password').value,
       });
+      setLoading(false);
       if (data.error) {
-        alert(data.error);
+        showMessage(data.error);
       } else {
         setUserInfo(data);
         document.location.hash = '/';
