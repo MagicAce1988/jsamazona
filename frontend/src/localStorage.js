@@ -32,3 +32,5 @@ export const getUserInfo = () =>
         token: '',
         isAdmin: '',
       };
+
+export const deleteUserInfo = () => localStorage.removeItem('userInfo');
