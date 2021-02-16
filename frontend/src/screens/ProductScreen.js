@@ -1,5 +1,5 @@
 import { getProduct } from '../api';
-import { parseRequestUrl } from '../utils';
+import { parseRequestUrl, setLoading } from '../utils';
 
 import Rating from '../components/Rating';
 import { getCartItems } from '../localStorage';
@@ -17,7 +17,9 @@ const ProductScreen = {
   },
   render: async () => {
     const request = parseRequestUrl();
+    setLoading(true);
     const product = await getProduct(request.id);
+    setLoading(false);
     const cartItems = getCartItems();
     const currentProductInCart = cartItems.find(
       (item) => item.product === request.id

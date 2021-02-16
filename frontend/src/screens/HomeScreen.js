@@ -1,15 +1,18 @@
 import axios from 'axios';
 import Rating from '../components/Rating';
+import { setLoading } from '../utils';
 
 const HomeScreen = {
   after_render: () => {},
   render: async () => {
+    setLoading(true);
     const response = await axios({
       url: 'http://localhost:5000/api/products',
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    setLoading(false);
     if (!response || response.statusText !== 'OK') {
       return `<div>Error in getting data</div>`;
     }
