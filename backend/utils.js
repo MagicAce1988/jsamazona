@@ -12,3 +12,20 @@ export const generate_token = (user) =>
     },
     config.JWT_SECRET
   );
+
+export const isAuth = (req, res, next) => {
+  const bearer_token = req.headers.authorization;
+  if (!bearer_token) {
+    res.status(401).send({ message: 'Token is not supplied' });
+  } else {
+    const token = bearer_token.replace('Bearer ', '');
+    jwt.verify(token, config.JWT_SECRET, (err, data) => {
+      if (err) {
+        res.status(401).send({ message: 'Invalid token' });
+      } else {
+        req.user = data;
+        next();
+      }
+    });
+  }
+};
