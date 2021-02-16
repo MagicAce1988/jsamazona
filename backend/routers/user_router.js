@@ -46,4 +46,29 @@ user_router.post(
   })
 );
 
+user_router.post(
+  '/register',
+  express_async_handler(async (req, res) => {
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    const created_user = await user.save();
+
+    if (!created_user) {
+      res.status(401).send({ message: 'Invalid user data' });
+    } else {
+      res.send({
+        _id: created_user._id,
+        name: created_user.name,
+        email: created_user.email,
+        isAdmin: created_user.isAdmin,
+        token: generate_token(created_user),
+      });
+    }
+  })
+);
+
 export default user_router;
