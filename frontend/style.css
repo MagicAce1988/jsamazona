@@ -329,7 +329,7 @@ footer {
 .form-container {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
 }
 
@@ -352,4 +352,31 @@ footer {
 
 .form-container h1 {
   font-size: 2.5rem;
+}
+
+/* Checkout */
+
+.checkout-steps {
+  display: flex;
+  justify-content: space-between;
+  width: 40rem;
+  margin: 1rem auto;
+}
+
+.checkout-steps > div {
+  border-top: 0.3rem solid var(--gray);
+  color: var(--gray);
+  flex: 1 1;
+  padding-top: 1rem;
+}
+
+.checkout-steps > div.active {
+  color: var(--orange);
+  border-color: var(--orange);
+  cursor: pointer;
+}
+
+#signin-form,
+#register-form {
+  align-self: center;
 }
