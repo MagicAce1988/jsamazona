@@ -2,9 +2,11 @@ import Header from './components/Header';
 import CartScreen from './screens/CartScreen';
 import Error404Screen from './screens/Error404Screen';
 import HomeScreen from './screens/HomeScreen';
+import PaymentScreen from './screens/PaymentScreen';
 import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import ShippingScreen from './screens/ShippingScreen';
 import SignInScreen from './screens/SignInScreen';
 import { parseRequestUrl, setLoading } from './utils';
 
@@ -16,6 +18,8 @@ const routes = {
   '/signin': SignInScreen,
   '/register': RegisterScreen,
   '/profile': ProfileScreen,
+  '/shipping': ShippingScreen,
+  '/payment': PaymentScreen,
 };
 
 const router = async () => {
