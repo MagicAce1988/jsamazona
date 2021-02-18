@@ -143,3 +143,46 @@ export const getOrder = async (id) => {
     };
   }
 };
+
+export const getPaypalClientId = async () => {
+  try {
+    const response = await axios({
+      url: `${apiUrl}/api/paypal/clientId`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (response.statusText !== 'OK') {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  } catch (error) {
+    return {
+      error: error?.response?.data?.message || error.message,
+    };
+  }
+};
+
+export const payOrder = async (orderId, paymentResult) => {
+  try {
+    const { token } = getUserInfo();
+    const response = await axios({
+      url: `${apiUrl}/api/orders/${orderId}/pay`,
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: paymentResult,
+    });
+    if (response.statusText !== 'OK') {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  } catch (error) {
+    return {
+      error: error?.response?.data?.message || error.message,
+    };
+  }
+};
