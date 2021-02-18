@@ -2,6 +2,7 @@ import Header from './components/Header';
 import CartScreen from './screens/CartScreen';
 import Error404Screen from './screens/Error404Screen';
 import HomeScreen from './screens/HomeScreen';
+import OrderScreen from './screens/OrderScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -14,6 +15,7 @@ import { parseRequestUrl, setLoading } from './utils';
 const routes = {
   '/': HomeScreen,
   '/product/:id': ProductScreen,
+  '/order/:id': OrderScreen,
   '/cart': CartScreen,
   '/cart/:id': CartScreen,
   '/signin': SignInScreen,
