@@ -35,17 +35,17 @@ const PaymentScreen = {
                 </li>
                 <li>
                   <div>
-                    <input type="radio" name="payment-method" id="paypal" value="Paypal" checked="${
-                      paymentMethod === 'Paypal'
-                    }"/>
+                    <input type="radio" name="payment-method" id="paypal" value="Paypal" ${
+                      paymentMethod === 'Paypal' ? 'checked' : ''
+                    }/>
                     <label for="paypal">Paypal</label>
                   </div>
                 </li>   
                 <li>
                   <div>
-                    <input type="radio" name="payment-method" id="stripe" value="Stripe" checked="${
-                      paymentMethod === 'Stripe'
-                    }"/>
+                    <input type="radio" name="payment-method" id="stripe" value="Stripe" ${
+                      paymentMethod === 'Stripe' ? 'checked' : ''
+                    }/>
                     <label for="stripe">Stripe</label>
                   </div>
                 </li>    
