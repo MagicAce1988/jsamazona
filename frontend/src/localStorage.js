@@ -71,3 +71,5 @@ export const getPayment = () => {
 export const setPayment = ({ paymentMethod = 'Paypal' }) => {
   localStorage.setItem('payment', JSON.stringify({ paymentMethod }));
 };
+
+export const cleanCart = () => localStorage.removeItem('cartItems');
