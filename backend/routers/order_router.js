@@ -6,6 +6,19 @@ import { isAuth } from '../utils';
 
 const order_router = express.Router();
 
+order_router.get(
+  '/:id',
+  isAuth,
+  express_async_handler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      res.send(order);
+    } else {
+      res.status(404).send({ message: 'Order not found' });
+    }
+  })
+);
+
 order_router.post(
   '/',
   isAuth,
