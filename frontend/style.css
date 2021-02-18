@@ -1,5 +1,6 @@
 :root {
   --whitest: #ffffff;
+  --whitish: #fcfcfc;
   --blackest: #000000;
   --transparentBlack: rgba(16, 16, 16, 0.5);
   --lightestGray: #f0f0f0;
@@ -379,4 +380,68 @@ footer {
 #signin-form,
 #register-form {
   align-self: center;
+}
+
+/* Place Order */
+
+.order {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  justify-content: space-between;
+}
+
+.order h2 {
+  margin: 0;
+  font-size: 2rem;
+  padding-bottom: 1rem;
+}
+
+.order .cart-list-container {
+  padding: 0;
+}
+
+.order-info {
+  flex: 3 1 60rem;
+}
+
+.order-info > div {
+  border: 0.1rem solid var(--gray);
+  border-radius: 0.5rem;
+  background-color: var(--whitish);
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.order-info > div:first-child {
+  margin-top: 0;
+}
+
+.order-info > div:last-child {
+  margin-bottom: 0;
+}
+
+.order-action {
+  flex: 1 1 20rem;
+  border: 0.1rem solid var(--gray);
+  border-radius: 0.5rem;
+  background-color: var(--whitish);
+  padding: 1rem;
+}
+
+.order-action ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.order-action li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.order-action .total {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--red);
 }
