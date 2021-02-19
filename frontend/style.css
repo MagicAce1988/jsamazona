@@ -229,6 +229,10 @@ footer {
   width: 100%;
 }
 
+.details-info {
+  margin-right: 5px;
+}
+
 .details-info,
 .details-action {
   flex: 1 1 30rem;
@@ -448,4 +452,38 @@ footer {
   font-size: 2rem;
   font-weight: bold;
   color: var(--red);
+}
+
+/* Profile */
+
+.profile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.profile-info {
+  flex: 1 1 20rem;
+}
+
+.profile-orders {
+  flex: 3 1 60rem;
+  margin-left: 1rem;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+}
+
+tbody > tr:nth-child(odd) {
+  background-color: var(--lightestGray);
+}
+
+td {
+  padding: 0.5rem;
 }
