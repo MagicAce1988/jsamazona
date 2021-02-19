@@ -144,6 +144,28 @@ export const getOrder = async (id) => {
   }
 };
 
+export const getOrders = async () => {
+  try {
+    const { token } = getUserInfo();
+    const response = await axios({
+      url: `${apiUrl}/api/orders/mine`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.statusText !== 'OK') {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  } catch (error) {
+    return {
+      error: error?.response?.data?.message || error.message,
+    };
+  }
+};
+
 export const getPaypalClientId = async () => {
   try {
     const response = await axios({
