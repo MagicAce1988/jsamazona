@@ -46,4 +46,32 @@ product_router.post(
   })
 );
 
+product_router.put(
+  '/:id',
+  isAuth,
+  isAdmin,
+  express_async_handler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      product.name = req.body.name;
+      product.price = req.body.price;
+      product.image = req.body.image;
+      product.brand = req.body.brand;
+      product.category = req.body.category;
+      product.countInStock = req.body.countInStock;
+      product.description = req.body.description;
+
+      const updated_product = await product.save();
+      if (updated_product) {
+        res.send({ message: 'Product Updated', product: updated_product });
+      } else {
+        res.status(500).send({ message: 'Error in updating product' });
+      }
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
+    }
+  })
+);
+
 export default product_router;
