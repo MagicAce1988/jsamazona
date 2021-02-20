@@ -9,6 +9,7 @@ import user_router from './routers/user_router';
 import { error_messages_map } from './constants';
 import order_router from './routers/order_router';
 import product_router from './routers/product_router';
+import upload_router from './routers/upload_router';
 
 mongoose
   .connect(config.MONGODB_URL, {
@@ -29,6 +30,7 @@ const app = express();
 
 app.use(cors());
 app.use(body_parser.json());
+app.use('/api/uploads', upload_router);
 app.use('/api/users', user_router);
 app.use('/api/products', product_router);
 app.use('/api/orders', order_router);
