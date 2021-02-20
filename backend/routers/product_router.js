@@ -6,6 +6,22 @@ import { isAuth, isAdmin } from '../utils';
 
 const product_router = express.Router();
 
+product_router.get(
+  '/',
+  express_async_handler(async (req, res) => {
+    const products = await Product.find({});
+    res.send(products);
+  })
+);
+
+product_router.get(
+  '/:id',
+  express_async_handler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    res.send(product);
+  })
+);
+
 product_router.post(
   '/',
   isAuth,

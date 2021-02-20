@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen';
 import OrderScreen from './screens/OrderScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import ProductEditScreen from './screens/ProductEditScreen';
 import ProductListScreen from './screens/ProductListScreen';
 import ProductScreen from './screens/ProductScreen';
 import ProfileScreen from './screens/ProfileScreen';
@@ -17,6 +18,7 @@ import { parseRequestUrl, setLoading } from './utils';
 const routes = {
   '/': HomeScreen,
   '/product/:id': ProductScreen,
+  '/product/:id/edit': ProductEditScreen,
   '/order/:id': OrderScreen,
   '/cart': CartScreen,
   '/cart/:id': CartScreen,
