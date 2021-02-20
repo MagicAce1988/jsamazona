@@ -35,18 +35,6 @@ app.use('/api/orders', order_router);
 app.get('/api/paypal/clientId', (req, res) => {
   res.send({ clientId: config.PAYPAL_CLIENT_ID });
 });
-app.get('/api/products', (req, res) => {
-  res.send(data.products);
-});
-
-app.get('/api/products/:id', (req, res) => {
-  const product = data.products.find((item) => item._id === req.params.id);
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ message: 'Product not found' });
-  }
-});
 
 app.use((err, req, res, next) => {
   const status = err.name && err.name === 'ValidationError' ? 400 : 500;
