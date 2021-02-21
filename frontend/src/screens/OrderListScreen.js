@@ -10,7 +10,7 @@ const OrderListScreen = {
     const editButtons = document.getElementsByClassName('edit-button');
     [...editButtons].forEach((editButton) =>
       editButton.addEventListener('click', () => {
-        document.location.hash = `/order/${editButton.id}/edit`;
+        document.location.hash = `/order/${editButton.id}`;
       })
     );
     const deleteButtons = document.getElementsByClassName('delete-button');

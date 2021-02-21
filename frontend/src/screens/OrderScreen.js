@@ -1,5 +1,7 @@
+import moment from 'moment';
 import { parseRequestUrl, reRender, setLoading, showMessage } from '../utils';
-import { getOrder, getPaypalClientId, payOrder } from '../api';
+import { deliverOrder, getOrder, getPaypalClientId, payOrder } from '../api';
+import { getUserInfo } from '../localStorage';
 
 function handlePayment(clientId, totalPrice) {
   window.paypal.Button.render(
@@ -65,7 +67,20 @@ async function addPaypalSdk(totalPrice) {
 }
 
 const OrderScreen = {
-  after_render: () => {},
+  after_render: () => {
+    document
+      .getElementById('deliver-order-button')
+      ?.addEventListener('click', async () => {
+        setLoading(true);
+        const data = await deliverOrder(parseRequestUrl().id);
+        setLoading(false);
+        if (data.error) {
+          showMessage(data.error);
+        } else {
+          showMessage('Order Delivered', () => reRender(OrderScreen));
+        }
+      });
+  },
   render: async () => {
     const request = parseRequestUrl();
     const {
@@ -85,6 +100,7 @@ const OrderScreen = {
     if (!isPaid) {
       addPaypalSdk(totalPrice);
     }
+    const { isAdmin } = getUserInfo();
     return `
     <div>
         <h1>Order ${_id}</h1>
@@ -98,7 +114,9 @@ const OrderScreen = {
                     </div>
                     ${
                       isDelivered
-                        ? `<div class="success">Delivered at ${deliveredAt}</div>`
+                        ? `<div class="success">Delivered at ${moment(
+                            deliveredAt
+                          ).format('DD/MM/YYYY')}</div>`
                         : `<div class="error">Not Delivered</div>`
                     }
                 </div>
@@ -107,7 +125,9 @@ const OrderScreen = {
                     <div>Payment Method: ${payment.paymentMethod}</div>
                     ${
                       isPaid
-                        ? `<div class="success">Paid at ${paidAt}</div>`
+                        ? `<div class="success">Paid at ${moment(paidAt).format(
+                            'DD/MM/YYYY'
+                          )}</div>`
                         : `<div class="error">Not Paid</div>`
                     }
                 </div>
@@ -164,6 +184,15 @@ const OrderScreen = {
                         </li>
                         <li>
                             <div  class="fw" id="paypal-button"></div>
+                        </li>
+                        <li>
+                            ${
+                              isPaid && !isDelivered && isAdmin
+                                ? `
+                              <button id="deliver-order-button" class="primary fw">Deliver Order</button>
+                            `
+                                : ''
+                            }
                         </li>
                     </ul>
                 </div>

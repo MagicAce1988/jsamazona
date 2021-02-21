@@ -78,6 +78,23 @@ order_router.put(
   })
 );
 
+order_router.put(
+  '/:id/deliver',
+  isAuth,
+  isAdmin,
+  express_async_handler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+      const updated_order = await order.save();
+      res.send({ message: 'Order Delivered', order: updated_order });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
+
 order_router.delete(
   '/:id',
   isAuth,
