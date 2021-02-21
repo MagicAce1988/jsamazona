@@ -1,8 +1,7 @@
 /* eslint-disable no-alert */
-import moment from 'moment';
 import { getMyOrders, update } from '../api';
 import { getUserInfo, setUserInfo, deleteUserInfo } from '../localStorage';
-import { setLoading, showMessage } from '../utils';
+import { formatDate, setLoading, showMessage } from '../utils';
 
 const ProfileScreen = {
   after_render: () => {
@@ -91,17 +90,11 @@ const ProfileScreen = {
                     (order) => `
                 <tr>
                   <td>${order._id.slice(8)}</td>
-                  <td>${moment(order.createdAt).format('DD/MM/YYYY')}</td>
+                  <td>${formatDate(order.createdAt)}</td>
                   <td>${order.totalPrice}</td>
+                  <td>${order.paidAt ? formatDate(order.paidAt) : 'No'}</td>
                   <td>${
-                    order.paidAt
-                      ? moment(order.paidAt).format('DD/MM/YYYY')
-                      : 'No'
-                  }</td>
-                  <td>${
-                    order.deliveredAt
-                      ? moment(order.deliveredAt).format('DD/MM/YYYY')
-                      : 'No'
+                    order.deliveredAt ? formatDate(order.deliveredAt) : 'No'
                   }</td>
                   <td><a href="/#/order/${order._id}">DETAILS</a></td>
                 </tr>`
