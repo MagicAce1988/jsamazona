@@ -533,7 +533,8 @@ td {
   padding: 1rem;
 }
 
-.product-list button {
+.product-list button,
+.order-list button {
   font-size: 1.3rem;
   padding: 0.5rem;
 }
