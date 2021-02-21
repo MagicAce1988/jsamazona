@@ -74,4 +74,23 @@ product_router.put(
   })
 );
 
+product_router.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  express_async_handler(async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      const deleted_product = await product.remove();
+      if (deleted_product) {
+        res.send({ message: 'Product Deleted', product: deleted_product });
+      } else {
+        res.status(500).send({ message: 'Error in deleting the product' });
+      }
+    } else {
+      res.status(404).send({ message: 'Product Not Found' });
+    }
+  })
+);
+
 export default product_router;
