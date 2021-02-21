@@ -16,6 +16,9 @@
   --golder: #f0c040;
   --green: #40c040;
   --red: #c04040;
+  --lightPink: #f0e0e0;
+  --lightGreen: #e0f0e0;
+  --lightBlue: #e0e0f0;
 }
 
 * {
@@ -541,4 +544,43 @@ td {
 
 .tr-action {
   width: 10rem;
+}
+
+.summary-items {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.summary-items > li {
+  border: 0.1rem solid var(--gray);
+  border-radius: 0.5rem;
+  margin: 2rem;
+  flex: 1 1 20rem;
+}
+
+.summary-title {
+  background-color: var(--lightGray);
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+.summary-body {
+  font-size: 4rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.summary-items li:nth-child(1) :first-child {
+  background-color: var(--lightPink);
+}
+
+.summary-items li:nth-child(2) :first-child {
+  background-color: var(--lightBlue);
+}
+
+.summary-items li:nth-child(3) :first-child {
+  background-color: var(--lightGreen);
 }

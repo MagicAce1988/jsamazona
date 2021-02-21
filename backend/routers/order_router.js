@@ -2,9 +2,36 @@
 import express from 'express';
 import express_async_handler from 'express-async-handler';
 import Order from '../models/order_model';
+import User from '../models/user_model';
 import { isAuth, isAdmin } from '../utils';
 
 const order_router = express.Router();
+
+order_router.get(
+  '/summary',
+  isAuth,
+  isAdmin,
+  express_async_handler(async (req, res) => {
+    const orders = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          numOrders: { $sum: 1 },
+          totalSales: { $sum: '$totalPrice' },
+        },
+      },
+    ]);
+    const users = await User.aggregate([
+      {
+        $group: {
+          _id: null,
+          numUsers: { $sum: 1 },
+        },
+      },
+    ]);
+    res.send({ users, orders });
+  })
+);
 
 order_router.get(
   '/',
