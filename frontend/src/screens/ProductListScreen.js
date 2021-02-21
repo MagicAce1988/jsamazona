@@ -1,5 +1,8 @@
-import { createProduct, getProducts } from '../api';
+/* eslint-disable no-alert */
+/* eslint-disable no-restricted-globals */
+import { createProduct, getProducts, deleteProduct } from '../api';
 import DashboardMenu from '../components/DashboardMenu';
+import { showMessage, reRender, setLoading } from '../utils';
 
 const ProductListScreen = {
   after_render: () => {
@@ -13,6 +16,21 @@ const ProductListScreen = {
     [...editButtons].forEach((editButton) =>
       editButton.addEventListener('click', () => {
         document.location.hash = `/product/${editButton.id}/edit`;
+      })
+    );
+    const deleteButtons = document.getElementsByClassName('delete-button');
+    [...deleteButtons].forEach((deleteButton) =>
+      deleteButton.addEventListener('click', async () => {
+        if (confirm('Are you sure you want to delete this product?')) {
+          setLoading(true);
+          const data = await deleteProduct(deleteButton.id);
+          if (data.error) {
+            showMessage(data.error);
+          } else {
+            reRender(ProductListScreen);
+          }
+          setLoading(false);
+        }
       })
     );
   },
