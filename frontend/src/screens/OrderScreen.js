@@ -1,5 +1,10 @@
-import moment from 'moment';
-import { parseRequestUrl, reRender, setLoading, showMessage } from '../utils';
+import {
+  formatDate,
+  parseRequestUrl,
+  reRender,
+  setLoading,
+  showMessage,
+} from '../utils';
 import { deliverOrder, getOrder, getPaypalClientId, payOrder } from '../api';
 import { getUserInfo } from '../localStorage';
 
@@ -114,9 +119,9 @@ const OrderScreen = {
                     </div>
                     ${
                       isDelivered
-                        ? `<div class="success">Delivered at ${moment(
+                        ? `<div class="success">Delivered at ${formatDate(
                             deliveredAt
-                          ).format('DD/MM/YYYY')}</div>`
+                          )}</div>`
                         : `<div class="error">Not Delivered</div>`
                     }
                 </div>
@@ -125,8 +130,8 @@ const OrderScreen = {
                     <div>Payment Method: ${payment.paymentMethod}</div>
                     ${
                       isPaid
-                        ? `<div class="success">Paid at ${moment(paidAt).format(
-                            'DD/MM/YYYY'
+                        ? `<div class="success">Paid at ${formatDate(
+                            paidAt
                           )}</div>`
                         : `<div class="error">Not Paid</div>`
                     }

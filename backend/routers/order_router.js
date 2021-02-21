@@ -3,6 +3,7 @@ import express from 'express';
 import express_async_handler from 'express-async-handler';
 import Order from '../models/order_model';
 import User from '../models/user_model';
+import Product from '../models/product_model';
 import { isAuth, isAdmin } from '../utils';
 
 const order_router = express.Router();
@@ -29,7 +30,27 @@ order_router.get(
         },
       },
     ]);
-    res.send({ users, orders });
+    const daily_orders = await Order.aggregate([
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          orders: { $sum: 1 },
+          sales: { $sum: '$totalPrice' },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+    const product_categories = await Product.aggregate([
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    res.send({ users, orders, daily_orders, product_categories });
   })
 );
 

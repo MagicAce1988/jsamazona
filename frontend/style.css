@@ -584,3 +584,16 @@ td {
 .summary-items li:nth-child(3) :first-child {
   background-color: var(--lightGreen);
 }
+
+.charts {
+  display: flex;
+  justify-content: space-between;
+}
+
+.charts > div {
+  flex: 1;
+}
+
+.ct-label {
+  font-size: 1.1rem;
+}

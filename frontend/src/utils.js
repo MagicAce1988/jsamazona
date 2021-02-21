@@ -48,3 +48,8 @@ export const redirectUser = () => {
     document.location.hash = '/';
   }
 };
+
+export const formatDate = (date) => {
+  const newDate = new Date(date);
+  return `${newDate.getDate()}/${newDate.getMonth()}/${newDate.getFullYear()}`;
+};

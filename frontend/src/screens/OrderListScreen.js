@@ -1,16 +1,15 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-restricted-globals */
-import moment from 'moment';
-import { createOrder, getOrders, deleteOrder } from '../api';
+import { getOrders, deleteOrder } from '../api';
 import DashboardMenu from '../components/DashboardMenu';
-import { showMessage, reRender, setLoading } from '../utils';
+import { showMessage, reRender, setLoading, formatDate } from '../utils';
 
 const OrderListScreen = {
   after_render: () => {
     const editButtons = document.getElementsByClassName('edit-button');
     [...editButtons].forEach((editButton) =>
       editButton.addEventListener('click', () => {
-        document.location.hash = `/order/${editButton.id}`;
+        document.location.hash = `/order/${editButton.id}/edit`;
       })
     );
     const deleteButtons = document.getElementsByClassName('delete-button');
@@ -55,19 +54,15 @@ const OrderListScreen = {
                             (order) => `
                         <tr>
                             <td>${order._id}</td>
-                            <td>${moment(order.createdAt).format(
-                              'DD/MM/YYYY'
-                            )}</td>
+                            <td>${formatDate(order.createdAt)}</td>
                             <td>${order.totalPrice}</td>
                             <td>${order.user.name}</td>
                             <td>${
-                              order.paidAt
-                                ? moment(order.paidAt).format('DD/MM/YYYY')
-                                : 'No'
+                              order.paidAt ? formatDate(order.paidAt) : 'No'
                             }</td>
                             <td>${
                               order.deliveredAt
-                                ? moment(order.deliveredAt).format('DD/MM/YYYY')
+                                ? formatDate(order.deliveredAt)
                                 : 'No'
                             }</td>
                             <td>
