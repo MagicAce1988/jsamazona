@@ -61,7 +61,7 @@ app.use((err, req, res, next) => {
   res.status(status).send({ message: error_message });
 });
 
-app.listen(5000, () => {
+app.listen(config.PORT, () => {
   // eslint-disable-next-line no-console
-  console.log('serve at http://localhost:5000');
+  console.log('serve at http://localhost: ');
 });
