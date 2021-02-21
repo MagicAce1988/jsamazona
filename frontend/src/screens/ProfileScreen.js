@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 
-import { getOrders, update } from '../api';
+import { getMyOrders, update } from '../api';
 import { getUserInfo, setUserInfo, deleteUserInfo } from '../localStorage';
 import { setLoading, showMessage } from '../utils';
 
@@ -36,7 +36,7 @@ const ProfileScreen = {
     if (!name) {
       document.location.hash = '/';
     }
-    const orders = await getOrders();
+    const orders = await getMyOrders();
     return `
     <div class="content profile">
       <div class="profile-info">

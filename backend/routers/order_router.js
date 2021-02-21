@@ -2,9 +2,19 @@
 import express from 'express';
 import express_async_handler from 'express-async-handler';
 import Order from '../models/order_model';
-import { isAuth } from '../utils';
+import { isAuth, isAdmin } from '../utils';
 
 const order_router = express.Router();
+
+order_router.get(
+  '/',
+  isAuth,
+  isAdmin,
+  express_async_handler(async (req, res) => {
+    const orders = await Order.find({}).populate('user');
+    res.send(orders);
+  })
+);
 
 order_router.get(
   '/mine',
@@ -62,6 +72,25 @@ order_router.put(
       };
       const updated_order = await order.save();
       res.send({ message: 'Order Paid', order: updated_order });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
+    }
+  })
+);
+
+order_router.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  express_async_handler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      const deleted_order = await order.remove();
+      if (deleted_order) {
+        res.send({ message: 'Order Deleted', order: deleted_order });
+      } else {
+        res.status(500).send({ message: 'Error in deleting the order' });
+      }
     } else {
       res.status(404).send({ message: 'Order Not Found' });
     }

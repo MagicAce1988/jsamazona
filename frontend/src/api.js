@@ -234,6 +234,50 @@ export const createOrder = async (order) => {
   }
 };
 
+export const getOrders = async () => {
+  try {
+    const { token } = getUserInfo();
+    const response = await axios({
+      url: `${apiUrl}/api/orders`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.statusText !== 'OK') {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  } catch (error) {
+    return {
+      error: error?.response?.data?.message || error.message,
+    };
+  }
+};
+
+export const getMyOrders = async () => {
+  try {
+    const { token } = getUserInfo();
+    const response = await axios({
+      url: `${apiUrl}/api/orders/mine`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.statusText !== 'OK') {
+      throw new Error(response.data.message);
+    }
+    return response.data;
+  } catch (error) {
+    return {
+      error: error?.response?.data?.message || error.message,
+    };
+  }
+};
+
 export const getOrder = async (id) => {
   try {
     const { token } = getUserInfo();
@@ -256,12 +300,12 @@ export const getOrder = async (id) => {
   }
 };
 
-export const getOrders = async () => {
+export const deleteOrder = async (id) => {
   try {
     const { token } = getUserInfo();
     const response = await axios({
-      url: `${apiUrl}/api/orders/mine`,
-      method: 'GET',
+      url: `${apiUrl}/api/orders/${id}`,
+      method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
