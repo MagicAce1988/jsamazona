@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import body_parser from 'body-parser';
+import path from 'path';
 import config from './config';
 import data from './data';
 import user_router from './routers/user_router';
@@ -36,6 +37,11 @@ app.use('/api/products', product_router);
 app.use('/api/orders', order_router);
 app.get('/api/paypal/clientId', (req, res) => {
   res.send({ clientId: config.PAYPAL_CLIENT_ID });
+});
+app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
+app.use(express.static(path.join(__dirname, '/../frontend')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../frontend/index.html'));
 });
 
 app.use((err, req, res, next) => {
